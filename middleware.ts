@@ -10,26 +10,38 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  // Update the middleware to allow access to the verification page
-  // If user is not signed in and the current path is not / or /auth/*, redirect to /auth/login
-  if (!session && !req.nextUrl.pathname.startsWith("/auth") && req.nextUrl.pathname !== "/") {
-    return NextResponse.redirect(new URL("/auth/login", req.url))
+  const { pathname } = req.nextUrl; // Get the path
+
+  // Allow access to the root page and auth pages regardless of session
+  // except redirect logged-in users away from login/register
+  if (pathname === '/' || pathname.startsWith('/auth')) {
+    if (session && (pathname === '/auth/login' || pathname === '/auth/register')) {
+      return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
+    // Allow access to root and other auth pages (like verification, callback)
+    return res;
   }
 
-  // If user is signed in and the current path is /auth/login or /auth/register, redirect to /dashboard
-  if (session && (req.nextUrl.pathname === "/auth/login" || req.nextUrl.pathname === "/auth/register")) {
-    return NextResponse.redirect(new URL("/dashboard", req.url))
+  // If trying to access any other page AND no session, redirect to login
+  if (!session) {
+    return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 
-  // Allow access to verification page and callback regardless of auth status
-  if (req.nextUrl.pathname === "/auth/verification" || req.nextUrl.pathname === "/auth/callback") {
-    return res
-  }
-
+  // Otherwise (user has session and is not on /, /auth/*), allow access
   return res
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - FootyLabs_logo.svg (Your specific logo file at the root of public)
+     * Also exclude paths ending with common image/font extensions
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|FootyLabs_logo.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?)$).*)',
+  ],
 }
-
