@@ -4,13 +4,11 @@ import Image from "next/image"
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link href="/" className={`flex items-center ${className}`}>
-      <Image
-        src="/FootyLabs_logo.svg"
-        alt="FootyLabs Logo"
-        width={100}
-        height={40}
-        className="h-auto"
-      />
+        <img
+            src="/FootyLabs_logo.svg"
+            alt="FootyLabs Logo"
+            className={`h-[60px] w-auto ${className}`}
+        />
     </Link>
   )
 }
