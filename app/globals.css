@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 238 47% 38%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 238 47% 38%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 238 47% 38%;
+
+    --primary: 238 47% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 238 47% 38%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 238 47% 38%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 238 47% 38%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 238 47% 38%;
+    --chart-2: 250 95% 64%;
+    --chart-3: 142 76% 36%;
+    --chart-4: 341 79% 53%;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 238 47% 38%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 238 47% 38%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.hero-section {
+  background-image: linear-gradient(rgba(49, 52, 141, 0.7), rgba(49, 52, 141, 0.8)), url("/football-field-night.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Custom styles for charts */
+:root {
+  --color-wins: hsl(var(--chart-1));
+  --color-draws: hsl(var(--chart-2));
+  --color-losses: hsl(var(--chart-3));
+  --color-goalsScored: hsl(var(--chart-1));
+  --color-goalsConceded: hsl(var(--chart-4));
+  --color-yourTeam: hsl(var(--chart-1));
+  --color-leagueAverage: hsl(var(--chart-2));
+}
+
