@@ -1,0 +1,166 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  public: {
+    Tables: {
+      clubs: {
+        Row: {
+          created_at: string
+          id: number
+          league: string | null
+          logo_url: string | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          league?: string | null
+          logo_url?: string | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          league?: string | null
+          logo_url?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      players: {
+        Row: {
+          club_id: number | null
+          created_at: string
+          id: number
+          name: string
+          position: string
+          stats: Json
+          updated_at: string
+        }
+        Insert: {
+          club_id?: number | null
+          created_at?: string
+          id?: number
+          name: string
+          position: string
+          stats?: Json
+          updated_at?: string
+        }
+        Update: {
+          club_id?: number | null
+          created_at?: string
+          id?: number
+          name?: string
+          position?: string
+          stats?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "players_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          club_id: number | null
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          club_id?: number | null
+          created_at?: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          club_id?: number | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      get_latest_players_by_club: {
+        Args: {
+          p_club_id: number
+        }
+        Returns: {
+          id: number
+          name: string
+          position: string
+          stats: Json
+          updated_at: string
+        }[]
+      }
+      get_latest_players_for_club: {
+        Args: {
+          p_club_id: number
+        }
+        Returns: {
+          id: number
+          name: string
+          position: string
+          stats: Json
+          updated_at: string
+        }[]
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
